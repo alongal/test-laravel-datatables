@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
 {
@@ -14,5 +14,10 @@ class UsersController extends Controller
         return view('index', [
             'users' => $users
         ]);
+    }
+
+    public function usersData()
+    {
+        return DataTables::of(User::query())->make(true);
     }
 }

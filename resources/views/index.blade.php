@@ -15,29 +15,17 @@
                         @endif
 
                         <div>
-                            <table class="table table-striped">
+                            <table class="table table-bordered" id="users-table">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Created</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($users as $user)
                                     <tr>
-                                        <th scope="row">{{ $user->id }}</th>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->created_at }}</td>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Updated At</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
+                                </thead>
                             </table>
-                            <div>
-                                {{ $users->links() }}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,3 +33,22 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+      $(function () {
+        $('#users-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: "{{ route('users.data') }}",
+          columns: [
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'email', name: 'email'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'updated_at', name: 'updated_at'}
+          ]
+        })
+      })
+    </script>
+@endpush
